@@ -2,15 +2,16 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=0.9">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Now Playing - RBC Radio</title>
-    <link rel="icon" type="image/png" href="/icon-192">
-    <link rel="manifest" href="manifest.json">
+    <link rel="manifest" href="/manifest.json">
     <script>
         if ('serviceWorker' in navigator) {
-            navigator.serviceWorker.register('/service-worker.js')
-                .then(registration => console.log('Service Worker registered', registration))
-                .catch(error => console.error('Service Worker registration failed', error));
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('/service-worker.js')
+                    .then(reg => console.log('Service Worker registered!', reg))
+                    .catch(err => console.error('Service Worker registration failed:', err));
+            });
         }
     </script>
     <style>
@@ -25,26 +26,20 @@
             flex-direction: column;
             min-height: 100vh;
         }
-        header {
+        
+        header, footer {
             background-color: #8748c5;
-            padding: 17px;
+            padding: 15px;
             text-align: center;
             color: #ffffff;
-            margin: 20px;
+            margin: 20px auto;
             border-radius: 15px;
-            font-size: 33px;
+            font-size: 20px;
             font-weight: bold;
+            width: 90%;
+            max-width: 600px;
         }
-        footer {
-            background-color: #8748c5;
-            padding: 10px;
-            text-align: center;
-            color: #ffffff;
-            margin: 20px;
-            border-radius: 15px;
-            font-size: 15px;
-            font-weight: bold;  
-        }
+        
         .container {
             flex: 1;
             padding: 20px;
@@ -55,75 +50,88 @@
             flex-wrap: wrap;
             gap: 20px;
         }
+        
         .now-playing-box, .recently-played {
             background-color: #2a2a2a;
-            padding: 17px;
+            padding: 18px;
             border-radius: 25px;
             box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
-            margin-right: auto;
-            margin-left: auto; 
+            margin: 0 auto;
         }
+        
         .now-playing-box {
-            max-width: 350px;
+            max-width: 320px;
             width: 100%;
         }
+        
         .recently-played {
-            width: 230px;
+            width: 220px;
             text-align: left;
             color: white;
         }
+        
         .recently-played h3 {
             text-align: center;
             margin-bottom: 10px;
         }
+        
         .recently-played ul {
             list-style: none;
             padding: 0;
             margin: 0;
         }
+        
         .recently-played li {
             padding: 5px 0;
             font-size: 14px;
             border-bottom: 1px solid rgba(255, 255, 255, 0.2);
         }
+        
         #now-playing img {
-            width: 200px;
-            height: 200px;
+            width: 180px;
+            height: 180px;
             border-radius: 15px;
         }
+        
         #song-info {
-            margin-top: 15px;
+            margin-top: 12px;
             text-align: center;
         }
+        
         #song-title {
-            font-size: 20px;
+            font-size: 18px;
             font-weight: bold;
             color: #b85dff;
         }
+        
         #song-artist {
-            font-size: 14px;
+            font-size: 13px;
             font-weight: normal;
             color: #b85dff;
         }
+        
         .audio-player {
-            margin-top: 15px;
+            margin-top: 12px;
             display: flex;
             justify-content: center;
             align-items: center;
         }
+        
         .play-button {
             background: #b85dff;
             border: none;
             cursor: pointer;
-            padding: 8px;
+            padding: 7px;
             border-radius: 15px;
-            width: 55px;
-            height: 55px;
+            width: 50px;
+            height: 50px;
         }
+        
         .play-button img {
-            width: 35px;
-            height: 35px;
+            width: 30px;
+            height: 30px;
         }
+        
         @media (max-width: 768px) {
             .container {
                 flex-direction: column;
@@ -131,11 +139,10 @@
             }
             .now-playing-box {
                 order: -1;
-                width: 90%;
             }
             .recently-played {
-                width: 90%;
-                max-width: 350px;
+                width: 100%;
+                max-width: 320px;
                 text-align: center;
             }
         }
@@ -156,9 +163,8 @@
                 <button class="play-button" id="play-btn">
                     <img src="https://files.svgcdn.io/uil/play-circle.svg" alt="Play" id="play-icon">
                 </button>
-                <audio id="audio-stream">
+                <audio id="audio-stream" autoplay>
                     <source src="https://cdnstream1.typicalmedia.net/rbcradio1.m4a" type="audio/mp4">
-                    Your browser does not support the audio element.
                 </audio>
             </div>
         </div>
@@ -176,7 +182,7 @@
         const playButton = document.getElementById("play-btn");
         const playIcon = document.getElementById("play-icon");
         const recentSongsList = document.getElementById("recent-songs");
-
+        
         playButton.addEventListener("click", () => {
             if (audio.paused) {
                 audio.play();
@@ -194,12 +200,9 @@
                 const data = await response.json();
                 const song = data.now_playing.song;
                 
-                if (`${song.artist} - ${song.title}` !== lastSong) {
-                    document.getElementById("song-title").textContent = song.title;
-                    document.getElementById("song-artist").textContent = song.artist;
-                    document.getElementById("album-art").src = song.art || 'album-art-placeholder.jpg';
-                    lastSong = `${song.artist} - ${song.title}`;
-                }
+                document.getElementById("song-title").textContent = song.title;
+                document.getElementById("song-artist").textContent = song.artist;
+                document.getElementById("album-art").src = song.art || 'album-art-placeholder.jpg';
                 
                 recentSongsList.innerHTML = data.song_history.map(item => `<li>${item.song.artist} - ${item.song.title}</li>`).join('');
             } catch (error) {
