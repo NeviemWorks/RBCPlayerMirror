@@ -24,5 +24,19 @@
       "purpose": "any"
   }
   ]
+   "screenshots": [
+    {
+      "src": "screenshots/Screenshot.png",
+      "sizes": "994x840",
+      "type": "image/png",
+      "form_factor": "narrow"
+    },
+    {
+      "src": "screenshots/ScreenshotWide.png",
+      "sizes": "1920x1080",
+      "type": "image/png",
+      "form_factor": "wide"
+    }
+  ]
 }
 
