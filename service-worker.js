@@ -1,10 +1,10 @@
 const CACHE_NAME = "rbc-radio-cache-v1";
 const urlsToCache = [
-  "/",
-  "/index.html",
-  "/manifest.json",
-  "/service-worker.js",
-  "/album-art-placeholder.jpg",
+  "RBCPlayersimple/",
+  "RBCPlayerSimple/index.html",
+  "RBCPlayerSimple/manifest.json",
+  "RBCPlayerSimple/service-worker.js",
+  "RBCPlayerSimple/album-art-placeholder.jpg",
   "https://files.svgcdn.io/uil/play-circle.svg",
   "https://files.svgcdn.io/uil/stop-circle.svg"
 ];

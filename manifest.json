@@ -2,18 +2,18 @@
   "name": "RBC Radio",
   "short_name": "RBC Radio",
   "description": "Listen to RBC Radio live stream and browse recently played songs.",
-  "start_url": "/",
+  "start_url": "RBCPlayerSimple/index.html",
   "display": "standalone",
   "background_color": "#b85dff",
   "theme_color": "#8748c5",
   "icons": [
     {
-      "src": "icon-192.png",
+      "src": "RBCPlayerSimple/icon-192.png",
       "sizes": "192x192",
       "type": "image/png"
     },
     {
-      "src": "icon-512.png",
+      "src": "RBCPlayerSimple/icon-512.png",
       "sizes": "512x512",
       "type": "image/png"
     }
