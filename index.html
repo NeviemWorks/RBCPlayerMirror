@@ -33,6 +33,7 @@
             display: flex;
             justify-content: center;
             align-items: center;
+            position: relative;
         }
         .now-playing-box {
             background-color: #2a2a2a;
@@ -40,6 +41,33 @@
             border-radius: 25px;
             display: inline-block;
             box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+        }
+        .recently-played {
+            background-color: #2a2a2a;
+            padding: 20px;
+            border-radius: 25px;
+            position: absolute;
+            left: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 250px;
+            text-align: left;
+            color: white;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+        }
+        .recently-played h3 {
+            text-align: center;
+            margin-bottom: 10px;
+        }
+        .recently-played ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        .recently-played li {
+            padding: 5px 0;
+            font-size: 14px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
         }
         #now-playing img {
             width: 220px;
@@ -53,20 +81,34 @@
         #song-title {
             font-size: 22px;
             font-weight: bold;
-            color: #8748c5;
+            color: #b85dff;
         }
         #song-artist {
-            font-size: 18px;
-            color: #c3a3e6;
+            font-size: 16px;
+            font-weight: normal;
+            color: #b85dff;
         }
         .audio-player {
             margin-top: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
         }
-        audio {
-            width: 100%;
-            max-width: 320px;
-            background-color: #8748c5;
+        .play-button {
+            background: #b85dff;
+            border: none;
+            cursor: pointer;
+            padding: 10px;
             border-radius: 15px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 60px;
+            height: 60px;
+        }
+        .play-button img {
+            width: 40px;
+            height: 40px;
         }
         footer {
             background-color: #8748c5;
@@ -81,6 +123,10 @@
 <body>
     <header>RBC Radio Live Stream</header>
     <div class="container">
+        <div class="recently-played">
+            <h3>Recently Played</h3>
+            <ul id="recent-songs"></ul>
+        </div>
         <div class="now-playing-box">
             <div id="now-playing">
                 <img src="album-art-placeholder.jpg" alt="Album Art" id="album-art">
@@ -90,7 +136,10 @@
                 </div>
             </div>
             <div class="audio-player">
-                <audio controls autoplay>
+                <button class="play-button" id="play-btn">
+                    <img src="https://files.svgcdn.io/uil/play-circle.svg" alt="Play" id="play-icon">
+                </button>
+                <audio id="audio-stream">
                     <source src="https://cdnstream1.typicalmedia.net/rbcradio1.m4a" type="audio/mp4">
                     Your browser does not support the audio element.
                 </audio>
@@ -103,6 +152,21 @@
 
     <script>
         let lastSong = "";
+        const audio = document.getElementById("audio-stream");
+        const playButton = document.getElementById("play-btn");
+        const playIcon = document.getElementById("play-icon");
+        const recentSongsList = document.getElementById("recent-songs");
+
+        playButton.addEventListener("click", () => {
+            if (audio.paused) {
+                audio.play();
+                playIcon.src = "https://files.svgcdn.io/uil/stop-circle.svg";
+            } else {
+                audio.pause();
+                audio.currentTime = 0;
+                playIcon.src = "https://files.svgcdn.io/uil/play-circle.svg";
+            }
+        });
         
         async function fetchNowPlaying() {
             try {
@@ -116,6 +180,8 @@
                     document.getElementById("album-art").src = song.art || 'album-art-placeholder.jpg';
                     lastSong = `${song.artist} - ${song.title}`;
                 }
+                
+                recentSongsList.innerHTML = data.song_history.map(item => `<li>${item.song.artist} - ${item.song.title}</li>`).join('');
             } catch (error) {
                 console.error("Error fetching song data:", error);
             }
