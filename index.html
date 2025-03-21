@@ -4,11 +4,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Now Playing - RBC Radio</title>
-    <link rel="manifest" href="RBCPlayerSimple/manifest.json">
+    <link rel="manifest" href="/RBCPlayerSimple/manifest.json">
+    <link rel="icon" href="/RBCPlayerSimple/img-192.png" type="image/png">
     <script>
         if ('serviceWorker' in navigator) {
             window.addEventListener('load', () => {
-                navigator.serviceWorker.register('RBCPlayerSimple/service-worker.js')
+                navigator.serviceWorker.register('/RBCPlayerSimple/service-worker.js')
                     .then(reg => console.log('Service Worker registered!', reg))
                     .catch(err => console.error('Service Worker registration failed:', err));
             });
@@ -153,7 +154,7 @@
     <div class="container">
         <div class="now-playing-box">
             <div id="now-playing">
-                <img src="album-art-placeholder.jpg" alt="Album Art" id="album-art">
+                <img src="/RBCPlayerSimple/album-art-placeholder.jpg" alt="Album Art" id="album-art">
                 <div id="song-info">
                     <div id="song-title">Loading...</div>
                     <div id="song-artist"></div>
@@ -202,7 +203,7 @@
                 
                 document.getElementById("song-title").textContent = song.title;
                 document.getElementById("song-artist").textContent = song.artist;
-                document.getElementById("album-art").src = song.art || 'album-art-placeholder.jpg';
+                document.getElementById("album-art").src = song.art || '/RBCPlayerSimple/album-art-placeholder.jpg';
                 
                 recentSongsList.innerHTML = data.song_history.map(item => `<li>${item.song.artist} - ${item.song.title}</li>`).join('');
             } catch (error) {
