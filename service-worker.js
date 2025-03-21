@@ -5,7 +5,7 @@ const urlsToCache = [
   "/RBCPlayerSimple/manifest.json",
   "/RBCPlayerSimple/service-worker.js",
   "/RBCPlayerSimple/album-art-placeholder.jpg",
-  "/RBCPlayerSimple/img-192.png", // Ensure favicon is cached
+  "/RBCPlayerSimple/icon-192.png", // Ensure favicon is cached
   "https://files.svgcdn.io/uil/play-circle.svg",
   "https://files.svgcdn.io/uil/stop-circle.svg"
 ];
