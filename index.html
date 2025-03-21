@@ -4,6 +4,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Now Playing - RBC Radio</title>
+    <link rel="manifest" href="manifest.json">
+    <script>
+        if ('serviceWorker' in navigator) {
+            navigator.serviceWorker.register('/service-worker.js')
+                .then(registration => console.log('Service Worker registered', registration))
+                .catch(error => console.error('Service Worker registration failed', error));
+        }
+    </script>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap');
         
@@ -187,8 +195,8 @@
             }
         }
         
-        setInterval(fetchNowPlaying, 10000); // Check every 10 seconds
-        fetchNowPlaying(); // Initial call to populate immediately
+        setInterval(fetchNowPlaying, 10000);
+        fetchNowPlaying();
     </script>
 </body>
 </html>
