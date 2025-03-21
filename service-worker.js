@@ -1,10 +1,11 @@
-const CACHE_NAME = "rbc-radio-cache-v1";
+const CACHE_NAME = "rbc-radio-cache-v2";
 const urlsToCache = [
-  "RBCPlayersimple/",
-  "RBCPlayerSimple/index.html",
-  "RBCPlayerSimple/manifest.json",
-  "RBCPlayerSimple/service-worker.js",
-  "RBCPlayerSimple/album-art-placeholder.jpg",
+  "/RBCPlayerSimple/",
+  "/RBCPlayerSimple/index.html",
+  "/RBCPlayerSimple/manifest.json",
+  "/RBCPlayerSimple/service-worker.js",
+  "/RBCPlayerSimple/album-art-placeholder.jpg",
+  "/RBCPlayerSimple/img-192.png", // Ensure favicon is cached
   "https://files.svgcdn.io/uil/play-circle.svg",
   "https://files.svgcdn.io/uil/stop-circle.svg"
 ];
