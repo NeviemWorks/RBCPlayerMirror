@@ -24,9 +24,9 @@
             flex-direction: column;
             min-height: 100vh;
         }
-        header {
+        header, footer {
             background-color: #8748c5;
-            padding: 20px 20px;
+            padding: 20px;
             text-align: center;
             color: #ffffff;
             margin: 20px;
@@ -40,28 +40,24 @@
             text-align: center;
             display: flex;
             justify-content: center;
-            align-items: center;
-            position: relative;
+            align-items: flex-start;
+            flex-wrap: wrap;
+            gap: 20px;
         }
-        .now-playing-box {
+        .now-playing-box, .recently-played {
             background-color: #2a2a2a;
             padding: 30px;
             border-radius: 25px;
-            display: inline-block;
             box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
         }
+        .now-playing-box {
+            max-width: 400px;
+            width: 100%;
+        }
         .recently-played {
-            background-color: #2a2a2a;
-            padding: 20px;
-            border-radius: 25px;
-            position: absolute;
-            left: 20px;
-            top: 50%;
-            transform: translateY(-50%);
             width: 250px;
             text-align: left;
             color: white;
-            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
         }
         .recently-played h3 {
             text-align: center;
@@ -108,9 +104,6 @@
             cursor: pointer;
             padding: 10px;
             border-radius: 15px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
             width: 60px;
             height: 60px;
         }
@@ -118,23 +111,25 @@
             width: 40px;
             height: 40px;
         }
-        footer {
-            background-color: #8748c5;
-            padding: 10px 20px;
-            text-align: center;
-            color: #ffffff;
-            margin: 20px;
-            border-radius: 15px;
+        @media (max-width: 768px) {
+            .container {
+                flex-direction: column;
+                align-items: center;
+            }
+            .now-playing-box {
+                order: -1;
+            }
+            .recently-played {
+                width: 100%;
+                max-width: 400px;
+                text-align: center;
+            }
         }
     </style>
 </head>
 <body>
     <header>RBC Radio Live Stream</header>
     <div class="container">
-        <div class="recently-played">
-            <h3>Recently Played</h3>
-            <ul id="recent-songs"></ul>
-        </div>
         <div class="now-playing-box">
             <div id="now-playing">
                 <img src="album-art-placeholder.jpg" alt="Album Art" id="album-art">
@@ -153,11 +148,14 @@
                 </audio>
             </div>
         </div>
+        <div class="recently-played">
+            <h3>Recently Played</h3>
+            <ul id="recent-songs"></ul>
+        </div>
     </div>
     <footer>
         <p>Fan made project. All credit goes to RBC Radio and artists. I have NO AFFILIATION with RBC Radio.</p>
     </footer>
-
     <script>
         let lastSong = "";
         const audio = document.getElementById("audio-stream");
