@@ -174,7 +174,7 @@
                 <button class="play-button" id="play-btn">
                     <img src="https://files.svgcdn.io/uil/play-circle.svg" alt="Play" id="play-icon">
                 </button>
-                <audio id="audio-stream" autoplay>
+                <audio id="audio-stream">
                     <source src="https://cdnstream1.typicalmedia.net/rbcradio1.m4a" type="audio/mp4">
                 </audio>
             </div>
@@ -221,7 +221,7 @@
             }
         }
         
-        setInterval(fetchNowPlaying, 10000);
+        setInterval(fetchNowPlaying, 5000);
         fetchNowPlaying();
     </script>
 </body>
