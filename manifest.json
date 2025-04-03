@@ -1,7 +1,7 @@
 {
   "name": "RBC Radio",
   "short_name": "RBC Radio",
-  "description": "Listen to RBC Radio live stream and browse recently played songs.",
+  "description": "Listen To RBC Radio Live in a smoother, more reliable interface!",
   "start_url": "index.html",
   "display": "standalone",
   "background_color": "#b85dff",
